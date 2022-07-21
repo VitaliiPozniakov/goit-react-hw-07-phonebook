@@ -2,9 +2,6 @@ import React from 'react';
 import css from './ContactForm.module.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-// import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/contacts-actions';
-// import { getContacts } from '../../redux/selectors';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const schema = yup.object().shape({
@@ -15,36 +12,34 @@ const schema = yup.object().shape({
     .trim()
     .matches()
     .required('Please enter name'),
-  number: yup.number().required('Please enter number'),
+  phone: yup.number().required('Please enter phone'),
 });
 
 const initialValues = {
   name: '',
-  number: '',
+  phone: '',
 };
 
-const ContactForm = ({contacts}) => {
-  // const dispatch = useDispatch();
-  // const contacts = useSelector(getContacts);
+const ContactForm = ({ contacts, createContact }) => {
   const checkRepeatName = name => {
     return contacts.find(
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
   };
 
-  const checkRepeatNumber = number => {
-    return contacts.find(contact => contact.number === number);
+  const checkRepeatPhone = phone => {
+    return contacts.find(contact => contact.phone === phone);
   };
 
   const handleSubmit = (values, actions) => {
-    const { name, number } = values;
+    const { name, phone } = values;
 
     if (checkRepeatName(name)) {
-      Notify.warning(`${name} is already in phonebook`);
-    } else if (checkRepeatNumber(number)) {
-      Notify.warning(`${number} is already in phonebook`);
+      Notify.warning(`Contact with name "${name}" is already in phonebook`);
+    } else if (checkRepeatPhone(phone)) {
+      Notify.warning(`Contact with phone "${phone}" is already in phonebook`);
     } else {
-      // dispatch(addContact(name, number));
+      createContact({ name, phone });
     }
 
     actions.resetForm();
@@ -62,10 +57,10 @@ const ContactForm = ({contacts}) => {
           <Field type="text" name="name" className={css.input} />
           <ErrorMessage name="name" component="span" className={css.error} />
         </label>
-        <label htmlFor="number" className={css.label}>
-          <span className={css.labelText}>Number</span>
-          <Field type="tel" name="number" className={css.input} />
-          <ErrorMessage name="number" component="span" className={css.error} />
+        <label htmlFor="phone" className={css.label}>
+          <span className={css.labelText}>Phone</span>
+          <Field type="tel" name="phone" className={css.input} />
+          <ErrorMessage name="phone" component="span" className={css.error} />
         </label>
         <div className={css.btnWraper}>
           <button type="submit" className={css.btn}>

@@ -6,19 +6,20 @@ import { Container } from './App.styled';
 import { useSelector } from 'react-redux';
 import { getContacts } from '../redux/selectors';
 import Notification from './Notification';
-import {useGetContactsQuery, useDeleteContactMutation} from '../redux/contactApi'
+import {useGetContactsQuery, useDeleteContactMutation, useCreateContactMutation} from '../redux/contactApi'
 
 export default function App() {
 
   const { data: contacts } = useGetContactsQuery();
   const [deleteContact, {isLoading: isDeliting}] = useDeleteContactMutation()
+  const [createContact] = useCreateContactMutation()
   // console.log(contacts)
   // console.log(useGetContactsQuery())
 
   return (
     <Container>
       <Section title="Phonebook">
-        <ContactForm contacts={contacts}/>
+        <ContactForm contacts={contacts} createContact={createContact}/>
       </Section>
 
       <Section title="Contacts">
