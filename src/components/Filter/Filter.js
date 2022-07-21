@@ -2,10 +2,9 @@ import React from 'react';
 import { Input, Label, LabelText } from './Filter.styled';
 import { filterContacts } from '../../redux/contacts-actions';
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilter } from '../../redux/selectors';
 
 const Filter = () => {
-  const filter = useSelector(getFilter);
+  const filter = useSelector(state => state.filter);
   const dispatch = useDispatch();
 
   return (
@@ -19,6 +18,5 @@ const Filter = () => {
     </Label>
   );
 };
-
 
 export default Filter;

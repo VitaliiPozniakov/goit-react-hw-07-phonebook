@@ -1,26 +1,34 @@
 import React from 'react';
 import { List, Span, Item, Btn } from './ContactList.styled';
-import { deleteContact } from '../../redux/contacts-actions';
-import { useSelector, useDispatch } from 'react-redux';
-import { getVisibleContacts } from '../../redux/selectors';
 
-const ContactList = ({contacts, onDelete, deliting}) => {
-  // const visibleContacts = useSelector(getVisibleContacts);
-  // const dispatch = useDispatch();
+import { useSelector } from 'react-redux';
 
-// console.log(contacts.contacts)
-// console.log(contacts)
-// console.log(onDelete)
+const ContactList = ({ contacts, onDelete, deliting }) => {
+  const filter = useSelector(state => state.filter);
 
-// contacts.contacts.map(({ id, phone, name }) => console.log(name))
+  const filtredContacts = () => {
+    const normalizedFilter = filter.toLowerCase();
+    return (
+      contacts &&
+      contacts.filter(contact =>
+        contact.name.toLowerCase().includes(normalizedFilter)
+      )
+    );
+  };
+
+  const visibleContacts = filtredContacts();
+
+  console.log(visibleContacts);
 
   return (
     <List>
-      {contacts.map(({ id, phone, name }) => (
+      {visibleContacts.map(({ id, phone, name }) => (
         <Item key={id}>
           <Span></Span>
           {name}: {phone}
-          <Btn onClick={()=>onDelete(id)}>{deliting ? 'Deliting...' : 'Delete'}</Btn>
+          <Btn type="button" disabled={deliting} onClick={() => onDelete(id)}>
+            {deliting ? 'Deliting...' : 'Delete'}
+          </Btn>
         </Item>
       ))}
     </List>
