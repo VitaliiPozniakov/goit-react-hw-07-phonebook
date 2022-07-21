@@ -2,9 +2,9 @@ import React from 'react';
 import css from './ContactForm.module.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../redux/contacts-actions';
-import { getContacts } from '../../redux/selectors';
+// import { getContacts } from '../../redux/selectors';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const schema = yup.object().shape({
@@ -23,9 +23,9 @@ const initialValues = {
   number: '',
 };
 
-const ContactForm = () => {
-  const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+const ContactForm = ({contacts}) => {
+  // const dispatch = useDispatch();
+  // const contacts = useSelector(getContacts);
   const checkRepeatName = name => {
     return contacts.find(
       contact => contact.name.toLowerCase() === name.toLowerCase()
@@ -44,7 +44,7 @@ const ContactForm = () => {
     } else if (checkRepeatNumber(number)) {
       Notify.warning(`${number} is already in phonebook`);
     } else {
-      dispatch(addContact(name, number));
+      // dispatch(addContact(name, number));
     }
 
     actions.resetForm();

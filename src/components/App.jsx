@@ -6,23 +6,29 @@ import { Container } from './App.styled';
 import { useSelector } from 'react-redux';
 import { getContacts } from '../redux/selectors';
 import Notification from './Notification';
+import {useGetContactsQuery, useDeleteContactMutation} from '../redux/contactApi'
 
 export default function App() {
-  const contacts = useSelector(getContacts);
+
+  const { data: contacts } = useGetContactsQuery();
+  const [deleteContact, {isLoading: isDeliting}] = useDeleteContactMutation()
+  // console.log(contacts)
+  // console.log(useGetContactsQuery())
 
   return (
     <Container>
       <Section title="Phonebook">
-        <ContactForm />
+        <ContactForm contacts={contacts}/>
       </Section>
 
       <Section title="Contacts">
-        {contacts.length > 1 && <Filter />}
-        {contacts.length > 0 ? (
-          <ContactList />
+        {/* {contacts && <Filter />} */}
+        {contacts ? (
+          <ContactList contacts={contacts} onDelete={deleteContact} deliting={isDeliting}/>
         ) : (
           <Notification message="Your contactlist is empty" />
         )}
+        
       </Section>
     </Container>
   );
