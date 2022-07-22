@@ -1,10 +1,10 @@
 import React from 'react';
 import { List, Span, Item, Btn } from './ContactList.styled';
-
 import { useSelector } from 'react-redux';
+import {getFilter} from '../../redux/selectors'
 
 const ContactList = ({ contacts, onDelete, deliting }) => {
-  const filter = useSelector(state => state.filter);
+  const filter = useSelector(getFilter);
 
   const filtredContacts = () => {
     const normalizedFilter = filter.toLowerCase();
@@ -17,8 +17,6 @@ const ContactList = ({ contacts, onDelete, deliting }) => {
   };
 
   const visibleContacts = filtredContacts();
-
-  console.log(visibleContacts);
 
   return (
     <List>

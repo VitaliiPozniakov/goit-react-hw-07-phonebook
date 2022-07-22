@@ -10,11 +10,11 @@ import {
   useCreateContactMutation,
 } from '../redux/contactApi';
 
+
 export default function App() {
   const { data: contacts } = useGetContactsQuery();
   const [deleteContact, { isLoading: isDeliting }] = useDeleteContactMutation();
   const [createContact] = useCreateContactMutation();
-  console.log(contacts);
 
   return (
     <Container>
