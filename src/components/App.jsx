@@ -6,14 +6,13 @@ import { Container } from './App.styled';
 import Notification from './Notification';
 import {
   useGetContactsQuery,
-  useDeleteContactMutation,
   useCreateContactMutation,
 } from '../redux/contactApi';
 
 
 export default function App() {
   const { data: contacts } = useGetContactsQuery();
-  const [deleteContact, { isLoading: isDeliting }] = useDeleteContactMutation();
+
   const [createContact] = useCreateContactMutation();
 
   return (
@@ -27,8 +26,7 @@ export default function App() {
         {contacts ? (
           <ContactList
             contacts={contacts}
-            onDelete={deleteContact}
-            deliting={isDeliting}
+       
           />
         ) : (
           <Notification message="Your contactlist is empty" />

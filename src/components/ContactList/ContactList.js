@@ -1,9 +1,10 @@
 import React from 'react';
-import { List, Span, Item, Btn } from './ContactList.styled';
+import { List } from './ContactList.styled';
 import { useSelector } from 'react-redux';
-import {getFilter} from '../../redux/selectors'
+import { getFilter } from '../../redux/selectors';
+import ContactListItem from '../ContactListItem';
 
-const ContactList = ({ contacts, onDelete, deliting }) => {
+const ContactList = ({ contacts }) => {
   const filter = useSelector(getFilter);
 
   const filtredContacts = () => {
@@ -20,14 +21,8 @@ const ContactList = ({ contacts, onDelete, deliting }) => {
 
   return (
     <List>
-      {visibleContacts.map(({ id, phone, name }) => (
-        <Item key={id}>
-          <Span></Span>
-          {name}: {phone}
-          <Btn type="button" disabled={deliting} onClick={() => onDelete(id)}>
-            {deliting ? 'Deliting...' : 'Delete'}
-          </Btn>
-        </Item>
+      {visibleContacts.map(visibleContact => (
+        <ContactListItem key={visibleContact.id} {...visibleContact} />
       ))}
     </List>
   );
