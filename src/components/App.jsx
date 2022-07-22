@@ -9,25 +9,22 @@ import {
   useCreateContactMutation,
 } from '../redux/contactApi';
 
-
 export default function App() {
   const { data: contacts } = useGetContactsQuery();
 
   const [createContact] = useCreateContactMutation();
+
+console.log(contacts)
 
   return (
     <Container>
       <Section title="Phonebook">
         <ContactForm contacts={contacts} createContact={createContact} />
       </Section>
-
       <Section title="Contacts">
-        {contacts && <Filter />}
-        {contacts ? (
-          <ContactList
-            contacts={contacts}
-       
-          />
+        {contacts && contacts.length > 0  && <Filter />}
+        {contacts && contacts.length > 0  ? (
+          <ContactList contacts={contacts} />
         ) : (
           <Notification message="Your contactlist is empty" />
         )}
