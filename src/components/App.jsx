@@ -7,14 +7,12 @@ import Notification from './Notification';
 import {
   useGetContactsQuery,
   useCreateContactMutation,
-} from '../redux/contactApi';
+} from '../redux/contacts/contactApi';
 
 export default function App() {
   const { data: contacts } = useGetContactsQuery();
 
   const [createContact] = useCreateContactMutation();
-
-console.log(contacts)
 
   return (
     <Container>
@@ -22,8 +20,8 @@ console.log(contacts)
         <ContactForm contacts={contacts} createContact={createContact} />
       </Section>
       <Section title="Contacts">
-        {contacts && contacts.length > 0  && <Filter />}
-        {contacts && contacts.length > 0  ? (
+        {contacts && contacts.length > 0 && <Filter />}
+        {contacts && contacts.length > 0 ? (
           <ContactList contacts={contacts} />
         ) : (
           <Notification message="Your contactlist is empty" />
