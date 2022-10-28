@@ -4,20 +4,15 @@ import Filter from './Filter';
 import Section from './Section';
 import { Container } from './App.styled';
 import Notification from './Notification';
-import {
-  useGetContactsQuery,
-  useCreateContactMutation,
-} from '../redux/contacts/contactApi';
+import { useGetContactsQuery } from '../redux/contacts/contactApi';
 
 export default function App() {
   const { data: contacts } = useGetContactsQuery();
 
-  const [createContact] = useCreateContactMutation();
-
   return (
     <Container>
       <Section title="Phonebook">
-        <ContactForm contacts={contacts} createContact={createContact} />
+        <ContactForm />
       </Section>
       <Section title="Contacts">
         {contacts && contacts.length > 0 && <Filter />}
